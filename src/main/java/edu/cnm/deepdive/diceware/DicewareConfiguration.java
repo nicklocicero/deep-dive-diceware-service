@@ -11,6 +11,9 @@ import org.springframework.security.oauth2.provider.token.ResourceServerTokenSer
 @Configuration
 public class DicewareConfiguration {
 
+  @Value("${oauth.clientId}")
+  private String clientId;
+
   @Bean
   public Random getRandom() {
     return new SecureRandom();
@@ -19,6 +22,11 @@ public class DicewareConfiguration {
   @Bean
   public ResourceBundle getBundle() {
     return ResourceBundle.getBundle("wordlist");
+  }
+
+  @Bean
+  public ResourceServerTokenServices tokenServices() {
+    return new GoogleTokenServices(clientId);
   }
 
 }
